@@ -1,0 +1,40 @@
+<div class="grid-container">
+    <mat-grid-list cols="3" rowHeight="85vh">   
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+          <mat-card class="dashboard-card">
+            <mat-card-header>
+              <mat-card-title>
+                  Pick your favorite season
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="dashboard-card-content">
+                <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group">
+                <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+                  {{season}}
+                </mat-radio-button>
+              </mat-radio-group>
+              
+            </mat-card-content>
+          </mat-card>
+          <button class="saveButton" mat-raised-button>
+              Save&Next
+            </button>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-card class="dashboard-card">
+              <mat-card-header>
+                <mat-card-title>
+                    Total question
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="dashboard-card-content">
+                  <button class="questionButton" *ngFor="let season of seasons; index as i" mat-raised-button>
+                      {{i+1}}
+                    </button>
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+      </mat-grid-list>
+</div>

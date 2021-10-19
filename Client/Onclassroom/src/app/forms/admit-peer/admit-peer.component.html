@@ -1,0 +1,18 @@
+<mat-list>
+  <mat-list-item *ngFor="let value of data;">
+   {{value.displayName}}
+   <button 
+      mat-raised-button 
+      class="ml-5" 
+      [mat-dialog-close]="{peerId:value?.id, admited:false}">
+      Cancel
+   </button>
+
+   <button 
+      mat-raised-button 
+      class="ml-1" 
+      [mat-dialog-close]="{peerId:value?.id, admited:true}">
+      Admit
+   </button>
+  </mat-list-item>
+</mat-list>

@@ -1,0 +1,27 @@
+<form class="example-form w-100" [formGroup]='form'>
+    <div class="alert alert-danger" *ngIf="form.get('')"></div>
+    <mat-form-field class="w-100 mt-1">
+        <input formControlName='title' matInput placeholder="Question" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="property('title').hasError('required')">
+            Question is <strong>required</strong>
+          </mat-error>
+    </mat-form-field>
+    <div formArrayName='options'>
+      <mat-form-field *ngFor="let option of options.controls;index as i" class="w-100 mt-1">
+        <input [formControlName]='i' matInput placeholder="Option" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="options.hasError('required')">
+            Option is <strong>required</strong>
+          </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="w-100 mt-1">
+      <input formControlName='answer' matInput placeholder="Answer" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="property('answer').hasError('required')">
+          Answer is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <div *ngIf='!data || form.enabled;'>
+      <button mat-raised-button color="primary" [mat-dialog-close]='form.value' >Submit</button>
+      <button mat-raised-button class="ml-3" color="primary" [mat-dialog-close]="">Cancel</button>
+    </div>  
+</form>  

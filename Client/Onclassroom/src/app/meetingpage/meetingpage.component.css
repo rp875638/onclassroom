@@ -1,0 +1,76 @@
+.example-container {
+    width: 100vw;
+    height: 93vh;
+  }
+  
+  mat-drawer-content {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+    min-width: 150px!important;
+    padding: 3px!important;
+    margin: 3px!important;
+   }
+.backgroundred{
+  background-color: black;
+} 
+.message{
+  height: 84.5vh;
+  position: relative;
+}
+.messageSend{
+  position: fixed;
+  bottom: 7%;
+  width: 280px;
+  padding:0 10px;
+  z-index: 999;
+}
+   section {
+    position: relative;
+  }
+  
+  .button-row1 {
+    position: absolute;
+    display: inline;
+    left: 0;
+  }
+  .button-row2 {
+    position: absolute;
+    display: inline;
+    right: 45%;
+  }
+  .button-row3 {
+    position: absolute;
+    display: inline;
+    right: 0;
+  }
+  
+  .example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap-reverse;
+  }
+  
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+  }
+  
+  .ml-10{
+    margin-left: 150px;
+  }
+
+  video {
+    object-fit: cover;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    max-height: 91vh;
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+}

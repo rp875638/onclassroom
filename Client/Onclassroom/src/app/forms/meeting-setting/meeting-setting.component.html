@@ -1,0 +1,52 @@
+<mat-tab-group class="navs">
+  <mat-tab label="Audio" class="flexContainer"> 
+    <mat-form-field>
+      <mat-label>Speaker</mat-label>
+      <mat-select #speaker value="side">
+        <mat-option 
+          *ngFor="let speaker of audioOutputDevices" 
+          value="speaker.deviceId">
+          {{speaker.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Microphone</mat-label>
+      <mat-select 
+        #microphone 
+        (selectionChange)='data.updateMic({restart:true,newDeviceId:microphone.selected})'>
+        <mat-option 
+          *ngFor="let mic of audioInputDevices" 
+          value="mic.deviceId">
+          {{mic.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>  
+  </mat-tab>
+  <mat-tab label="Video" class="flex-container"> 
+    <mat-form-field>
+      <mat-label>Camera</mat-label>
+      <mat-select 
+        #webcam 
+        (selectionChange)='data.updateWebcam({restart:true,newDeviceId:webcam.selected})'>
+        <mat-option 
+          *ngFor="let camera of videoInputDevices" 
+          value="camera.deviceId">
+          {{camera.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> 
+  </mat-tab>
+  <mat-tab label="Generals" class="flex-container"> 
+    <mat-form-field>
+      <mat-label>Layout</mat-label>
+      <mat-select #layouts value="side">
+        <mat-option *ngFor="let value of layout" value="value">{{value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-tab>
+</mat-tab-group> 
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+</div>

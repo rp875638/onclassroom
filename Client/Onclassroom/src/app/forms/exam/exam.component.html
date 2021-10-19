@@ -1,0 +1,44 @@
+<form class="example-form w-100" [formGroup]='form'>
+  <div class="alert alert-danger" *ngIf="form.get('')"></div>
+  <mat-form-field class="w-100 mt-1">
+      <input formControlName='title' matInput placeholder="Paper title" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="property('title').hasError('required')">
+          Title is <strong>required</strong>
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100 mt-1">
+    <input formControlName='dateTime' type="datetime-local" matInput placeholder="Exam time" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="property('dateTime').hasError('required')">
+      Exam time is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100 mt-1">
+    <input 
+      formControlName='duration' 
+      type="number" 
+      matInput 
+      placeholder="Duration" 
+      [errorStateMatcher]="matcher">
+    <mat-error *ngIf="property('duration').hasError('required')">
+        Duration is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-100 mt-1">
+    <input 
+      formControlName='totalMark' 
+      matInput 
+      placeholder="Total mark" 
+      [errorStateMatcher]="matcher">
+    <mat-error *ngIf="property('totalMark').hasError('required')">
+        Duration is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  
+  <button mat-raised-button color="primary" [mat-dialog-close]="form.value">Submit</button>
+  <button mat-raised-button class="ml-3" color="primary" [mat-dialog-close]="">Cancel</button>
+</form>
+  
+    

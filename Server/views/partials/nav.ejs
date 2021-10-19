@@ -1,0 +1,32 @@
+<nav class="navbar shadow-sm navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <a class="navbar-brand" href="#">OnClassroom</a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right ">
+                <% if(!user){%>
+                    <li class="nav-item "><a href="#" data-bs-toggle="modal" data-bs-target="#createAccount" class="nav-link "> Create account</a></li>
+                    <li class="nav-item "><a href="#" data-bs-toggle="modal" data-bs-target="#login" class="nav-link "> Login</a></li>
+                    <% } else {%>
+                        <li class="nav-item">
+                            <a href="/users/profile" class="nav-link">
+                                <%= user.first_name %>
+                            </a>
+
+                        </li>
+                        <li class="nav-item"><a href="/meeting" class="nav-link">Meetings</a></li>
+                        <li class="nav-item"><a href="/users/logout" class="nav-link"> Logout</a></li>
+                        <% } %>
+            </ul>
+
+        </div>
+    </div>
+</nav>

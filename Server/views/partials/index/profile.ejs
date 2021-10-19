@@ -1,0 +1,26 @@
+<div class="card mx-auto" style="width: 40rem;">
+
+    <div class="card-body">
+      <h4 class="card-title border-bottom">Profile</h4>
+      <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">Name </th>
+                <td><%= user.first_name%> <%= user.last_name%></td>
+                <td><a href="#">Edit</a></td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td><%= user.email %> </td>
+                <td><a href="#">Edit</a></td>
+            </tr>
+            <tr>
+                <th scope="row">Username</th>
+                <td><%= user.username %> </td>
+                <td><a href="#">Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+      <a href="#" class="btn btn-primary">Save</a>
+    </div>
+  </div>

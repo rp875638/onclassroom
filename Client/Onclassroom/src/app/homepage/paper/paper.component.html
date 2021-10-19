@@ -1,0 +1,59 @@
+<div class="grid-container">
+  <mat-grid-list cols="2" rowHeight="80px">
+    <mat-grid-tile  colspan="2" rowspan="1">
+      <mat-card class="dashboard-cards">
+        <mat-card-header>
+          <mat-card-title>
+            <button (click)='createQuestion()' mat-raised-button color="primary" class="meeting-buttons" aria-label="Toggle menu">
+              Create Question
+            </button>
+          </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <h1 class="mat-h1">Paper id: {{paperId}}</h1>
+  <mat-grid-list cols="2" rowHeight="60vh">
+    <mat-grid-tile *ngFor="let value of questions; index as i" colspan="1" rowspan="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+           {{i+1}}. {{value?.title}}
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button (click)="formEdit(i)" mat-menu-item>Edit</button>
+              <button (click)="save(value._id,i)" mat-menu-item>Save</button>
+              <button mat-menu-item (click)='remove(value?._id)'>Remove</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+            <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Option1</mat-label>
+                  <input [disabled]="!value?.edit" [value]="value?.options[0]" matInput>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                  <mat-label> Option2</mat-label>
+                  <input [disabled]="!value?.edit" [value]="value?.options[1]" matInput>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label> Option3</mat-label>
+                    <input [disabled]="!value?.edit" [value]="value?.options[2]" matInput>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label> Option4</mat-label>
+                    <input [disabled]="!value?.edit" [value]="value?.options[3]" matInput>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label> Answer</mat-label>
+                    <input [disabled]="!value?.edit" [value]="value?.answer" matInput>
+                </mat-form-field>
+              </form>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

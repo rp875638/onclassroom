@@ -1,0 +1,44 @@
+<form class="example-form w-100" [formGroup]='form'>
+    <div class="alert alert-danger" *ngIf="form.get('')"></div>
+    <mat-form-field class="w-100 mt-1">
+        <input 
+            formControlName='discription' 
+            matInput placeholder="Discription" 
+            [errorStateMatcher]="matcher">
+
+        <mat-error *ngIf="property('discription').hasError('required')">
+            Discription is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mt-1">
+        <input 
+            formControlName='password' 
+            type="password" 
+            matInput 
+            placeholder="Your password" 
+            [errorStateMatcher]="matcher">
+
+        <mat-error *ngIf="property('password').hasError('required')">
+            Password is <strong>required</strong>
+        </mat-error>
+
+        <mat-error 
+            *ngIf="property('password').hasError('minlength') && !property('password').hasError('required')">
+            Password should be minimum 8 character long
+        </mat-error>
+    </mat-form-field>
+
+    <button 
+        mat-raised-button color="primary" 
+        [mat-dialog-close]="form.value">
+        Submit
+    </button>
+
+    <button 
+        mat-raised-button 
+        class="ml-3" color="primary" 
+        [mat-dialog-close]="">
+        Cancel
+    </button>
+</form>  

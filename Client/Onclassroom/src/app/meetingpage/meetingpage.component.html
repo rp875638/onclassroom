@@ -1,0 +1,193 @@
+<mat-drawer-container class="example-container" hasBackdrop="false">
+    <mat-drawer #drawer mode="push">
+            <mat-tab-group class="navs">
+                <mat-tab label="Chat"> 
+                  <div class="message">
+                      <div class="messageContainer">
+                          <mat-card *ngFor="let item of messages">{{item?.displayName}}: {{item.message}}</mat-card>
+                      </div>
+                      <div class="messageSend ml-3">
+                          <mat-form-field appearance="legacy">
+                              <input matInput [(ngModel)]="message" (keyup.enter)="sendMessage()" placeholder="Message">
+                            </mat-form-field>
+                            <button mat-icon-button (click)="sendMessage()"><mat-icon>send</mat-icon></button>
+                      </div>
+                  </div>
+                    
+                </mat-tab>
+                <mat-tab label="Participants"> 
+
+                  <mat-card 
+                    *ngFor="let item of peers | keyvalue" 
+                    (click)="roomService.getVideo(item.value.id)">
+                    {{item.value?.displayName}}
+                      
+                      <button 
+                        mat-icon-button 
+                        *ngIf="isAdmin" 
+                        class="ml-10" 
+                        [matMenuTriggerFor]="peer" 
+                        aria-label="Toggle menu">
+                        
+                        <mat-icon>
+                        more_vert
+                        </mat-icon>
+
+                      </button>
+
+                      <mat-menu  
+                        #peer="matMenu" 
+                        xPosition="before">
+                        
+                        <button 
+                          mat-menu-item 
+                          (click)="roomService.stopPeerVideo(item.value.id)" 
+                          *ngIf='item.value?.isVideo'>
+                        Stop video
+                        </button>
+
+                        <button 
+                          mat-menu-item 
+                          (click)='roomService.stopPeerScreenSharing(item.value.id)' 
+                          *ngIf='item.value?.isScreen'>
+                        Stop screenshare
+                        </button>
+
+                        <button 
+                          mat-menu-item 
+                          (click)="roomService.mutePeer(item.value.id)" 
+                          *ngIf='item.value?.isMic'>
+                        Mute
+                        </button>
+
+                        <button 
+                          mat-menu-item 
+                          (click)="roomService.lowerPeerHand(item.value.id)" 
+                          *ngIf='item.value?.raisedHand'>
+                        Lower Hand
+                        </button>
+
+                        <button mat-menu-item 
+                          (click)="this.roomService.kickPeer(item.value.id)">
+                        Remove
+                        </button>
+
+                      </mat-menu>
+                  </mat-card> 
+
+                </mat-tab>
+            </mat-tab-group>                      
+    </mat-drawer>
+    <section class="container-fluid backgroundred">
+        <div class="row gx-0">
+            <div class="col">
+              <video #localVideo autoplay>
+              </video>
+            </div>
+            <div class="col-3">
+                <video-template 
+                *ngFor="let streams of roomService?.remoteStreams | keyvalue" 
+                [stream]='streams.value' 
+                [id]='streams.key' 
+                (changeVideo)='roomService.getVideo($event)'>
+                </video-template>
+            </div>
+        </div>
+    </section>
+
+</mat-drawer-container>
+<section>
+    <div class="button-row1">
+      <div class="example-flex-container">
+        <div class="example-button-container">
+          <button mat-icon-button (click)="muteUnmute()" color="primary" matTooltip="Mic" aria-label="Mute yourself">
+            <mat-icon>{{isMic?'mic':'mic_off'}}</mat-icon>
+          </button>
+        </div>
+        <div class="example-button-container">
+          <button mat-icon-button color="accent" (click)="leaveMeeting()" matTooltip="Leave Meeting" class="myfab" aria-label="Leave meeting">
+            <mat-icon>call_end</mat-icon>
+          </button>
+        </div>
+        <div class="example-button-container">
+          <button mat-icon-button  (click)="playStop()" color="warn" matTooltip="Video" aria-label="Stop video">
+            <mat-icon>{{isVideo?'videocam':'videocam_off'}}</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="button-row2">
+      <div class="example-flex-container">
+        <div *ngIf="isJoined; then joined else notJoined"></div>
+        <ng-template #joined>
+            <div class="example-button-container">
+                <button mat-icon-button (click)="screenShare()" color="accent" matTooltip="Share screen" class="myfab" aria-label="Screenshare">
+                  <mat-icon>{{isScreen?'cast_connected':'cast'}}</mat-icon>
+                </button>
+              </div>
+              <div class="example-button-container">
+                <button mat-icon-button color="accent" matTooltip="Chat" class="myfab" (click)="drawer.toggle()" aria-label="Chat message">
+                  <mat-icon>chat_bubble_outline</mat-icon>
+                </button>
+              </div>
+              <div class="example-button-container">
+                <button mat-icon-button color="accent" matTooltip="Participants" class="myfab" (click)="drawer.toggle()" aria-label="Participants">
+                  <mat-icon>people</mat-icon>
+                </button>
+              </div>
+              <div *ngIf="!isAdmin" class="example-button-container">
+                <button mat-icon-button color="accent" matTooltip="Ask question" class="myfab" (click)="raiseHand()" aria-label="Raise hand">
+                <mat-icon>{{isRaiseHand?'help':'help_outline'}}</mat-icon>
+                </button>
+              </div>
+        </ng-template>
+        <ng-template #notJoined>
+            <div class="example-button-container">
+                <button mat-icon-button color="accent" matTooltip="Join" class="myfab" (click)="join()" aria-label="Join">
+                  <mat-icon>add_circle_outline</mat-icon>
+                </button>
+              </div>
+          </ng-template>
+      </div>
+    </div>
+    <div *ngIf="isJoined" class="button-row3">
+      <div class="example-flex-container">
+        <div class="example-button-container">
+          <button mat-icon-button color="accent" matTooltip="More setting" [matMenuTriggerFor]="menu" class="myfab" aria-label="Example icon button with a bookmark icon">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+</section>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item *ngIf="isAdmin" (click)='endMeeting()'>
+    <mat-icon>call_end</mat-icon>
+    <span>End Meeting</span>
+  </button>
+  <button mat-menu-item *ngIf="isAdmin" (click)="this.roomService.muteAllPeers()">
+    <mat-icon>mic_off</mat-icon>
+    <span>Mute all</span>
+  </button>
+  <button mat-menu-item *ngIf="isAdmin" (click)="this.roomService.stopAllPeerVideo()">
+    <mat-icon>videocam_off</mat-icon>
+    <span>Stop everyone video</span>
+  </button>
+  <button mat-menu-item *ngIf="isAdmin" (click)="this.roomService.stopAllPeerScreenSharing()">
+    <mat-icon>stop_screen_share</mat-icon>
+    <span>Stop everyone screenshare</span>
+  </button>
+  <button mat-menu-item *ngIf="isAdmin"  (click)="lock()">
+    <mat-icon>{{isLocked?'lock':'lock_open'}}</mat-icon>
+    <span>{{isLocked?'Meeting Locked':'Meeting Unlocked'}}</span>
+  </button>
+  <button mat-menu-item (click)="openDialog()">
+    <mat-icon>settings</mat-icon>
+    <span>Setting</span>
+  </button>
+  <button mat-menu-item *ngIf="isAdmin" (click)="record()">
+    <mat-icon>{{isRecord?'pause_circle_outline':'play_circle_outline'}}</mat-icon>
+    <span>{{isRecord?'Pause Recording':'Record Meeting'}}</span>
+  </button>
+</mat-menu>

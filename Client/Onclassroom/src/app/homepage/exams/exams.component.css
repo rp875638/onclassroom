@@ -1,0 +1,49 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+.dashboard-cards {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+.meeting-button {
+  position: absolute;
+  top: -10px;
+}
+.meeting-buttons {
+  position: absolute;
+  top: 15px;
+}
+.dashboard-card-content {
+  text-align: center;
+}
+.meeting,.meetingAction{
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+
+.example-form {
+  min-width: 100px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
